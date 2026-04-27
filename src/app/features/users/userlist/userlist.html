@@ -1,0 +1,66 @@
+<!-- src/app/features/users/user-list/user-list.component.html -->
+
+<div class="container mt-4">
+  <h2 class="mb-3">Users</h2>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Table -->
+  <div *ngIf="!isLoading" class="table-responsive">
+    <table class="table table-striped table-hover table-bordered align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Nr</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span class="badge"
+              [ngClass]="{
+                'bg-secondary' : user.role === 'USER',
+                'bg-primary'   : user.role === 'STUDENT',
+                'bg-success'   : user.role === 'COMPANY'
+              }">
+              {{ user.role }}
+            </span>
+          </td>
+          <td>
+            <span class="badge"
+              [ngClass]="{
+                'bg-success'  : user.status === 'ACTIVE',
+                'bg-warning'  : user.status === 'INACTIVE',
+                'bg-danger'   : user.status === 'BLOCKED'
+              }">
+              {{ user.status }}
+            </span>
+          </td>
+          <td>{{ user.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+
+        <!-- Empty state -->
+        <tr *ngIf="users.length === 0">
+          <td colspan="6" class="text-center text-muted">No users yet registered.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

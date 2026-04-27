@@ -1,0 +1,383 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" routerLink="/">MMP</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/jobs">Jobs</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/companies">Companies</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+
+        <li class="nav-item ms-lg-3">
+          <a class="btn btn-outline-primary" routerLink="/login">Login</a>
+        </li>
+
+        <li class="nav-item ms-lg-2">
+          <a class="btn btn-primary" routerLink="/register">Sign up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->       <!-- Hero Section -->       <!-- Hero Section -->
+<section class="bg-light py-5">
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <span class="badge bg-primary mb-3">Match Making Platform</span>
+
+        <h1 class="display-5 fw-bold mb-3">
+          Connect Students with Real Opportunities
+        </h1>
+
+        <p class="lead text-muted mb-4">
+          Find internships, hire talent, and manage applications in one platform.
+        </p>
+
+         <div class="mt-4">
+  <p class="fw-semibold mb-2 text-muted">
+    What are you looking for?
+  </p>
+<!--Filter <<<hero Section Search Pagin-->
+  <div class="d-flex align-items-center gap-2">
+  <select
+    class="form-select form-select-lg w-auto px-4"
+    style="min-width: 220px;"
+    [(ngModel)]="selectedOption"
+  >
+    <option value="/jobs">Jobs</option>
+    <option value="/companies">Companies</option>
+    <option value="#about">About MMP</option>
+  </select>
+
+  <button
+    type="button"
+    class="btn btn-primary btn-lg px-4"
+    (click)="navigate(selectedOption)"
+  >
+    Explore →
+  </button>
+</div>
+</div>
+      </div>
+
+      <div class="col-lg-6 mt-5 mt-lg-0">
+        <div class="card border-0 shadow-lg rounded-4">
+          <div class="card-body p-4">
+            <h5 class="fw-bold mb-3">Why MMP?</h5>
+
+            <p class="text-muted">
+              MMP helps students discover internships and helps companies find
+              qualified junior talent faster.
+            </p>
+
+            <div class="row text-center mt-4">
+              <div class="col-4">
+                <h4 class="fw-bold text-primary">100+</h4>
+                <small class="text-muted">Students</small>
+              </div>
+
+              <div class="col-4">
+                <h4 class="fw-bold text-primary">30+</h4>
+                <small class="text-muted">Companies</small>
+              </div>
+
+              <div class="col-4">
+                <h4 class="fw-bold text-primary">50+</h4>
+                <small class="text-muted">Jobs</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- How MMP Works -->      <!-- How MMP Works -->      <!-- How MMP Works -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">How does MMP work?</h2>
+      <p class="text-muted">
+        A simple platform for students and companies to connect.
+      </p>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+  <!-- Students Flow -->
+  <div class="col-lg-6">
+    <div class="card h-100 border-0 shadow-sm rounded-4">
+      <div class="card-body p-4 p-lg-5">
+        <h4 class="fw-bold text-primary mb-4">Student Journey</h4>
+
+        <div class="d-flex align-items-center mb-4">
+          <div class="text-primary">1</div>
+          <div class="ms-3">
+            <h6 class="fw-bold mb-1">Create Profile</h6>
+            <p class="text-muted mb-0">Add skills, education, location and career interests.</p>
+          </div>
+        </div>
+
+        <div class="step-line bg-primary"></div>
+
+        <div class="d-flex align-items-center mb-4">
+          <div class="text-primary">2</div>
+          <div class="ms-3">
+            <h6 class="fw-bold mb-1">Browse Opportunities</h6>
+            <p class="text-muted mb-0">Discover internships and jobs from verified companies.</p>
+          </div>
+        </div>
+
+        <div class="step-line bg-primary"></div>
+
+        <div class="d-flex align-items-center">
+          <div class="text-primary">3</div>
+          <div class="ms-3">
+            <h6 class="fw-bold mb-1">Apply & Track</h6>
+            <p class="text-muted mb-0">Submit applications and follow your progress.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company Flow -->
+  <div class="col-lg-6">
+    <div class="card h-100 border-0 shadow-sm rounded-4">
+      <div class="card-body p-4 p-lg-5">
+        <h4 class="fw-bold text-success mb-4">Company Journey</h4>
+
+        <div class="d-flex align-items-center mb-4">
+          <div class="text-success">1</div>
+          <div class="ms-3">
+            <h6 class="fw-bold mb-1">Create Company Profile</h6>
+            <p class="text-muted mb-0">Introduce your company, sector and hiring needs.</p>
+          </div>
+        </div>
+
+        <div class="step-line bg-success"></div>
+
+        <div class="d-flex align-items-center mb-4">
+          <div class="text-success">2</div>
+          <div class="ms-3">
+            <h6 class="fw-bold mb-1">Post Opportunities</h6>
+            <p class="text-muted mb-0">Publish internships or jobs with required skills.</p>
+          </div>
+        </div>
+
+        <div class="step-line bg-success"></div>
+
+        <div class="d-flex align-items-center">
+          <div class="text-success">3</div>
+          <div class="ms-3">
+            <h6 class="fw-bold mb-1">Review Candidates</h6>
+            <p class="text-muted mb-0">Manage applications and select suitable students.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+<!-- Featured Jobs -->      <!-- Featured Jobs -->      <!-- Featured Jobs -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold mb-1">Featured Job Offers</h2>
+        <p class="text-muted mb-0">
+          Latest open opportunities from companies on MMP.
+        </p>
+      </div>
+
+      <a routerLink="/jobs" class="btn btn-outline-primary">
+        View all jobs
+      </a>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="text-muted mt-3">Loading job offers...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="!loading && jobPostings.length === 0" class="text-center py-5">
+      <h5>No open job postings available yet.</h5>
+      <p class="text-muted">Please check again later.</p>
+    </div>
+
+    <!-- Job Cards -->
+    <div class="row g-4" *ngIf="!loading && jobPostings.length > 0 ">
+      <div
+        class="col-md-6 col-lg-4"
+        *ngFor="let job of jobPostings"
+      >
+        <div class="card h-100 border-0 shadow-sm rounded-4">
+          <div class="card-body p-4">
+            <p class="text-muted mb-1">
+              {{ job.companyName }}
+            </p>
+
+            <h5 class="fw-bold mb-2">
+              {{ job.jobTitle }}
+            </h5>
+
+            <p class="text-muted mb-3">
+              {{ job.location }}
+            </p>
+
+            <div class="mb-3">
+              <span class="badge bg-primary me-1">
+                {{ job.jobType }}
+              </span>
+
+              <span class="badge bg-secondary me-1">
+                {{ job.workMode }}
+              </span>
+
+              <span class="badge bg-success">
+                {{ job.status }}
+              </span>
+            </div>
+
+            <a
+              [routerLink]="['/jobs', job.id]"
+              class="btn btn-outline-primary w-100"
+            >
+              View Details
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- User Value Section -->     <!-- User Value Section -->     <!-- User Value Section -->
+<section id="about" class="py-5 bg-light">
+  <div class="container text-center">
+
+    <h2 class="fw-bold mb-3">Choose your path on MMP</h2>
+    <p class="text-muted mb-5">
+      Join as a student looking for opportunities or as a company looking for talent.
+    </p>
+
+    <div class="row g-4 justify-content-center">
+
+      <!-- Student Card -->
+      <div class="col-md-5">
+        <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+          <div class="card-body text-center">
+
+            <span class="badge bg-primary-subtle text-primary mb-3">
+              <h4>ForStudents</h4> 
+            </span>
+
+            <p class="text-muted mb-4">
+              Find internships, build your profile and apply to real opportunities.
+            </p>
+
+             <div class="d-flex flex-wrap gap-2 mb-4">
+              <span class="badge rounded-pill text-bg-light border">Internship discovery</span>
+              <span class="badge rounded-pill text-bg-light border">Skill profile</span>
+              <span class="badge rounded-pill text-bg-light border">Application tracking</span>
+            </div>
+
+            <a routerLink="/register" class="btn btn-primary w-100">
+              Join as Student
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Card -->
+      <div class="col-md-5">
+        <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+          <div class="card-body text-center">
+
+            <span class="badge bg-primary-subtle text-primary mb-3">
+              <h4>For Companies</h4> 
+            </span>
+
+            <p class="text-muted mb-4">
+               Publish opportunities, review applications and connect with motivated candidates.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              <span class="badge rounded-pill text-bg-light border">Job posting</span>
+              <span class="badge rounded-pill text-bg-light border">Candidate review</span>
+              <span class="badge rounded-pill text-bg-light border">Application management</span>
+            </div>
+
+
+            <a routerLink="/register" class="btn btn-success w-100">
+              Join as Company
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5 bg-primary text-white text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Ready to get started?</h2>
+
+    <p class="mb-4">
+      Join MMP and start connecting students with real opportunities.
+    </p>
+
+    <a routerLink="/register" class="btn btn-light btn-lg">
+      Create Account
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+    <div class="mb-3 mb-md-0">
+      <strong>MMP</strong> © 2026
+    </div>
+
+    <div>
+      <a href="#about" class="text-white text-decoration-none me-3">About</a>
+      <a href="#" class="text-white text-decoration-none me-3">Contact</a>
+      <a href="#" class="text-white text-decoration-none me-3">LinkedIn</a>
+      <a href="#" class="text-white text-decoration-none">GitHub</a>
+    </div>
+  </div>
+</footer>

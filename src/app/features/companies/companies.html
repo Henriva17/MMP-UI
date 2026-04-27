@@ -1,0 +1,156 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!----people code -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" routerLink="/">MMP</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/jobs">Jobs</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/companies">Companies</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+
+        <li class="nav-item ms-lg-3">
+          <a class="btn btn-outline-primary" routerLink="/login">Login</a>
+        </li>
+
+        <li class="nav-item ms-lg-2">
+          <a class="btn btn-primary" routerLink="/register">Sign up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="companies-page">
+
+  <!--  HERO HEADER -->
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Companies</p>
+      <h1>Explore Companies</h1>
+      <p>Browse verified companies and discover opportunities.</p>
+    </div>
+
+    <button class="primary-btn"><a routerLink="/login" class="text-decoration-none fw-semibold">+ Create Company</a></button>
+  </div>
+
+  <!--  STATS -->
+  <div class="stats">
+    <div>
+      <h3>{{ companies.length }}</h3>
+      <p>Total Companies</p>
+    </div>
+
+    <div>
+      <h3>{{ getVerifiedCount() }}</h3>
+      <p>Verified</p>
+    </div>
+
+    <div>
+      <h3>{{ getPendingCount() }}</h3>
+      <p>Pending</p>
+    </div>
+  </div>
+
+  <!--  FILTER / SEARCH -->
+  <div class="toolbar">
+    <input
+      type="text"
+      placeholder="Search by company name..."
+      [(ngModel)]="searchTerm"
+    />
+
+    <select [(ngModel)]="selectedDomain">
+      <option value="">All Domains</option>
+      <option *ngFor="let domain of domains">{{ domain }}</option>
+    </select>
+  </div>
+
+  <!--  COMPANY LIST -->
+  <div class="company-grid">
+
+    <article
+      class="company-card"
+      *ngFor="let company of filteredCompanies()"
+    >
+      <!-- Logo initials -->
+      <div class="logo">
+        {{ company.fullName?.charAt(0) }}
+      </div>
+
+      <!-- Info -->
+      <div class="info">
+        <h2>{{ company.fullName }}</h2>
+        <p class="email">{{ company.email }}</p>
+        <p class="domain">{{ company.domainOfActivity }}</p>
+      </div>
+
+      <!-- Status -->
+      <span
+        class="status"
+        [ngClass]="{
+          verified: company.verificationStatus === 'VERIFIED',
+          pending: company.verificationStatus === 'PENDING',
+          rejected: company.verificationStatus === 'REJECTED'
+        }"
+      >
+        {{ company.verificationStatus }}
+      </span>
+
+      <!-- Extra -->
+      <p class="size">
+        <span class="material-icons">groups</span>
+        {{ company.companySize }} employees
+     </p>
+
+      <a
+        *ngIf="company.websiteLink"
+        [href]="company.websiteLink"
+        target="_blank"
+      >
+        Visit Website →
+      </a>
+
+      <!-- Actions -->
+      <button class="secondary-btn">
+        View Details
+      </button>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+    <div class="mb-3 mb-md-0">
+      <strong>MMP</strong> © 2026
+    </div>
+
+    <div>
+      <a href="#about" class="text-white text-decoration-none me-3">About</a>
+      <a href="#" class="text-white text-decoration-none me-3">Contact</a>
+      <a href="#" class="text-white text-decoration-none me-3">LinkedIn</a>
+      <a href="#" class="text-white text-decoration-none">GitHub</a>
+    </div>
+  </div>
+</footer>
