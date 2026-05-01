@@ -1,0 +1,157 @@
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"> <!----Google font location code -->
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" routerLink="/">MMP</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/jobs">Jobs</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/companies">Companies</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+
+        <li class="nav-item ms-lg-3">
+          <a class="btn btn-outline-primary" routerLink="/login">Login</a>
+        </li>
+
+        <li class="nav-item ms-lg-2">
+          <a class="btn btn-primary" routerLink="/register">Sign up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container py-5">
+
+  <!-- Back -->
+  <a routerLink="/jobs" class="btn btn-outline-secondary btn-sm mb-4">
+    ← Back to Jobs
+  </a>
+
+  <!-- Loading -->
+  @if(isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="text-muted mt-3">Loading job details...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if(errorMessage) {
+    <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+
+  <!-- Detail Card -->
+  @if(!isLoading && job) {
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4 p-lg-5">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+          <div>
+            <p class="text-muted mb-1">{{ job.companyName }}</p>
+            <h2 class="fw-bold mb-2">{{ job.jobTitle }}</h2>
+            <p class="text-muted mb-0">
+                <span class="material-symbols-outlined" style="color: #22ff64;">location_on</span>
+               {{ job.location }}
+            </p>
+          </div>
+          <div class="d-flex flex-column align-items-end gap-2">
+            <span class="badge bg-success fs-6">{{ job.status }}</span>
+            <small class="text-muted">
+              Posted {{ job.createdAt | date: 'dd MMM yyyy' }}
+            </small>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- Badges -->
+        <div class="mb-4">
+          <span class="badge bg-primary me-2 px-3 py-2">{{ job.jobType }}</span>
+          <span class="badge bg-secondary me-2 px-3 py-2">{{ job.workMode }}</span>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <h5 class="fw-bold mb-2">About this role</h5>
+          <p class="text-muted" style="line-height: 1.8">{{ job.description }}</p>
+        </div>
+
+        <!-- Required Skills -->
+        @if(job.requiredSkills && job.requiredSkills.length > 0) {
+          <div class="mb-4">
+            <h5 class="fw-bold mb-2">Required Skills</h5>
+            <div class="d-flex flex-wrap gap-2">
+              <span *ngFor="let skill of job.requiredSkills"
+                class="badge bg-light text-dark border px-3 py-2">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+        }
+
+        <!-- Education + Deadline -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3">
+              <small class="text-muted d-block mb-1">Education Level</small>
+              <span class="fw-semibold">{{ job.requiredEducationLevel }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3">
+              <small class="text-muted d-block mb-1">Application Deadline</small>
+              <span class="fw-semibold">
+                {{ job.applicationDeadline | date: 'dd MMM yyyy' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apply Button -->
+        <div class="d-grid">
+          <button class="btn btn-primary btn-lg">
+            Apply Now
+          </button>
+        </div>
+
+      </div>
+    </div>
+  }
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+    <div class="mb-3 mb-md-0">
+      <strong>MMP</strong> © 2026
+    </div>
+
+    <div>
+      <a href="#about" class="text-white text-decoration-none me-3">About</a>
+      <a href="#" class="text-white text-decoration-none me-3">Contact</a>
+      <a href="#" class="text-white text-decoration-none me-3">LinkedIn</a>
+      <a href="#" class="text-white text-decoration-none">GitHub</a>
+    </div>
+  </div>
+</footer>

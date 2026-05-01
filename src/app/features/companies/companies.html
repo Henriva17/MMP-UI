@@ -15,6 +15,9 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-lg-center">
+         <li class="nav-item">
+          <a class="nav-link" routerLink="/home">Home</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/jobs">Jobs</a>
         </li>
@@ -93,7 +96,7 @@
     >
       <!-- Logo initials -->
       <div class="logo">
-        {{ company.fullName?.charAt(0) }}
+        {{ company.fullName.charAt(0) }}
       </div>
 
       <!-- Info -->
@@ -130,8 +133,11 @@
       </a>
 
       <!-- Actions -->
-      <button class="secondary-btn">
-        View Details
+      <button rou class="secondary-btn">
+        <a [routerLink]="['/companies', company.id]" class="secondary-btn text-decoration-none">
+  View Details
+</a>
+        
       </button>
     </article>
 

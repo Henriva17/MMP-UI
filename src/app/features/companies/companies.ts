@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -19,29 +19,29 @@ export class Companies implements OnInit {
   selectedDomain = '';
 
   companies: CompanyResponse[] = [];
-  loading = false;
   errorMessage = '';
 
-  constructor(private companyService: CompanyService) {}
+  constructor(
+    private companyService: CompanyService) {}
 
   ngOnInit(): void {
     console.log('Companies component loaded');
     this.loadCompanies();
+    
   }
 
   loadCompanies(): void {
-    this.loading = true;
 
     this.companyService.getAllCompanies().subscribe({
       next: (data) => {
         console.log('Companies from API:', data);
         this.companies = data;
-        this.loading = false;
+        
       },
       error: (error) => {
         console.error('API error:', error);
         this.errorMessage = 'Failed to load companies';
-        this.loading = false;
+        
       }
     });
   }

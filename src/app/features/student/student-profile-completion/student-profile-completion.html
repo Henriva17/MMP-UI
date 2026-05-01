@@ -1,0 +1,91 @@
+<!-- student-profile-completion.component.html -->
+<section class="min-vh-100 bg-light py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body p-4 p-lg-5">
+
+            <div class="text-center mb-4">
+              <div class="fs-1">🎓</div>
+              <h3 class="fw-bold">Complete Your Student Profile</h3>
+              <p class="text-muted">Tell us more about yourself</p>
+            </div>
+
+            @if(errorMessage) {
+              <div class="alert alert-danger">{{ errorMessage }}</div>
+            }
+
+            <form (ngSubmit)="onSubmit()">
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Student Matricule *</label>
+                <input type="text" class="form-control" [(ngModel)]="form.studentMat" name="studentMat" required />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">University *</label>
+                <input type="text" class="form-control" [(ngModel)]="form.university" name="university" required />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Field of Study *</label>
+                <input type="text" class="form-control" [(ngModel)]="form.fieldOfStudy" name="fieldOfStudy" required />
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Education Level *</label>
+                  <select class="form-select" [(ngModel)]="form.educationLevel" name="educationLevel" required>
+                    <option *ngFor="let level of educationLevels" [value]="level">{{ level }}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Graduation Year *</label>
+                  <input type="number" class="form-control" [(ngModel)]="form.graduationYear" name="graduationYear" required />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Bio</label>
+                <textarea class="form-control" rows="3" [(ngModel)]="form.bio" name="bio"></textarea>
+              </div>
+
+              <!-- Skills -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Skills</label>
+                <div class="d-flex gap-2 mb-2">
+                  <input type="text" class="form-control" [(ngModel)]="skillInput"
+                    name="skillInput" placeholder="e.g. Angular" />
+                  <button type="button" class="btn btn-outline-primary" (click)="addSkill()">Add</button>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                  <span *ngFor="let skill of form.skills"
+                    class="badge bg-primary d-flex align-items-center gap-1 px-3 py-2">
+                    {{ skill }}
+                    <span style="cursor:pointer" (click)="removeSkill(skill)">×</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">GitHub Link</label>
+                <input type="url" class="form-control" [(ngModel)]="form.githubLink" name="githubLink" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Portfolio Link</label>
+                <input type="url" class="form-control" [(ngModel)]="form.portfolioLink" name="portfolioLink" />
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg w-100 mt-2" [disabled]="isLoading">
+                {{ isLoading ? 'Saving...' : 'Complete Profile' }}
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

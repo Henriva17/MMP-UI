@@ -1,0 +1,124 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" routerLink="/">MMP</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+         <li class="nav-item">
+          <a class="nav-link" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/jobs">Jobs</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/companies">Companies</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+
+        <li class="nav-item ms-lg-3">
+          <a class="btn btn-outline-primary" routerLink="/login">Login</a>
+        </li>
+
+        <li class="nav-item ms-lg-2">
+          <a class="btn btn-primary" routerLink="/register">Sign up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-5">
+
+  <div class="mb-5">
+    <h2 class="fw-bold">All Job Offers</h2>
+    <p class="text-muted">Browse all open opportunities on MMP</p>
+  </div>
+
+  <!-- Loading -->
+  @if(isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="text-muted mt-3">Loading jobs...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if(errorMessage) {
+    <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+
+  <!-- Jobs Grid -->
+  @if(!isLoading && !errorMessage) {
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" *ngFor="let job of jobs">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body p-4 d-flex flex-column">
+
+            <p class="text-muted mb-1 small">{{ job.companyName }}</p>
+            <h5 class="fw-bold mb-1">{{ job.jobTitle }}</h5>
+            <p class="text-muted mb-3 small">
+              <i class="bi bi-geo-alt"></i> {{ job.location }}
+            </p>
+
+            <div class="mb-3">
+              <span class="badge bg-primary me-1">{{ job.jobType }}</span>
+              <span class="badge bg-secondary me-1">{{ job.workMode }}</span>
+              <span class="badge bg-success">{{ job.status }}</span>
+            </div>
+
+            <div class="mt-auto">
+              <a [routerLink]="['/jobs', job.id]"
+                class="btn btn-outline-primary w-100">
+                View Details
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty -->
+      @if(jobs.length === 0) {
+        <div class="text-center py-5">
+          <h5>No open jobs available yet.</h5>
+          <p class="text-muted">Please check again later.</p>
+        </div>
+      }
+    </div>
+  }
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+    <div class="mb-3 mb-md-0">
+      <strong>MMP</strong> © 2026
+    </div>
+
+    <div>
+      <a href="#about" class="text-white text-decoration-none me-3">About</a>
+      <a href="#" class="text-white text-decoration-none me-3">Contact</a>
+      <a href="#" class="text-white text-decoration-none me-3">LinkedIn</a>
+      <a href="#" class="text-white text-decoration-none">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+
+
+

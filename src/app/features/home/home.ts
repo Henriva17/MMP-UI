@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -17,12 +17,13 @@ export class Home implements OnInit {
   selectedOption = '/jobs';
 
   jobPostings: JobPostingResponse[] = [];
-  loading = true;
+  loadingJobPosting: boolean = true;
   errorMessage = '';
 
   constructor(
     private jobpostingService: JobpostingService,
-    private router: Router
+    private router: Router,
+  
   ) {}
 
   navigate(value: string): void {
@@ -35,21 +36,26 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.loadOpenJobs();
+     
+   
   }
 
   loadOpenJobs(): void {
-    this.loading = true;
+    this.loadingJobPosting = true;
     this.errorMessage = '';
 
     this.jobpostingService.getOpenPostings().subscribe({
       next: (data) => {
         this.jobPostings = data;
-        this.loading = false;
+        this.loadingJobPosting = false;
+       
+        console.log(this.jobPostings);
       },
       error: (error) => {
         console.error('JOB API ERROR:', error);
         this.errorMessage = 'Failed to load job postings.';
-        this.loading = false;
+        this.loadingJobPosting = false;
+        
       }
     });
   }

@@ -6,6 +6,8 @@ import { RegisterUserRequest } from '../shared/models/requests/register-user-req
 import { Role } from '../shared/models/enums/role';
 import { Status } from '../shared/models/enums/status';
 import { UserResponse } from '../shared/models/responces/user-response';
+import { CreateStudentProfileRequest } from '../shared/models/requests/create-student-profile.request';
+import { CreateCompanyProfileRequest } from '../shared/models/requests/create-company-profile-request';
 
 
 
@@ -20,6 +22,19 @@ export class UserService {
       register(request: RegisterUserRequest): Observable<UserResponse> {
         return this.http.post<UserResponse>(`${this.baseUrl}/register`, request);
       }
+
+      // add to user.service.ts
+      createStudentProfile(userId: number, request: CreateStudentProfileRequest): Observable<any> {
+      return this.http.post(`${environment.url}/students/users/${userId}`, request);
+      }
+
+      createCompanyProfile(userId: number, request: CreateCompanyProfileRequest): Observable<any> {
+      return this.http.post(`${environment.url}/companies/users/${userId}`, request);
+      }
+
+
+
+
 
       // GET /api/users
       getAllUsers(): Observable<UserResponse[]> {
