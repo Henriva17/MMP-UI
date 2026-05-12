@@ -4,10 +4,12 @@ import { UserService } from '../../../services/user.service';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/AuthService';
 import { Role } from '../../../shared/models/enums/role';
+import { Footer } from '../../../shared/footer/footer';
+import { Navbar } from '../../../shared/navbar/navbar';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, Footer, Navbar],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -27,16 +29,13 @@ onSubmit(): void {
 
     this.authService.login({ email: this.email, password: this.password }).subscribe({
       next: (response) => {
-        this.isLoading = false;
-       
-
         //  role based redirect after login
         if (response.role === Role.USER) {
           this.router.navigate(['/choose-role']);
         } else if (response.role === Role.STUDENT) {
-          this.router.navigate(['/student/student-dashboard']);
+          this.router.navigate(['/student-dashboard']);
         } else if (response.role === Role.COMPANY) {
-          this.router.navigate(['/company/company-dashboard']);
+          this.router.navigate(['/company-dashboard']);
         }
       },
       error: () => {

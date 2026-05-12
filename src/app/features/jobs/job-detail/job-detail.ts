@@ -3,11 +3,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { JobpostingService } from '../../../services/jobposting.service';
 import { JobPostingResponse } from '../../../shared/models/responces/job-posting-response';
+import { Footer } from '../../../shared/footer/footer';
+import { Navbar } from '../../../shared/navbar/navbar';
+import { AuthService } from '../../../services/AuthService';
 
 @Component({
   selector: 'app-job-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, Footer, Navbar ,RouterLink],
   templateUrl: './job-detail.html',
   styleUrl: './job-detail.css',
 })
@@ -16,6 +19,8 @@ export class JobDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private jobService = inject(JobpostingService);
+  
+  constructor(public authService: AuthService) {}
 
   job: JobPostingResponse | null = null;
   isLoading = true;

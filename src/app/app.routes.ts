@@ -20,6 +20,10 @@ import { loginGuard } from './core/guards/login-guard';
 import { JobList } from './features/jobs/job-list/job-list';
 import { JobDetail } from './features/jobs/job-detail/job-detail';
 import { CompanyDetail } from './features/companies/company-detail/company-detail';
+import { ApplyJob } from './features/apply-job/apply-job';
+import { EditProfile } from './features/student/edit-profile/edit-profile';
+import { CreateJobPosting } from './features/company/create-job-posting/create-job-posting';
+
 
 export const routes: Routes = [
   {
@@ -44,7 +48,6 @@ export const routes: Routes = [
       },
       {
        path: 'login',
-       //canActivate: [loginGuard],
        component: Login,
        title: 'Login'
       },
@@ -56,7 +59,7 @@ export const routes: Routes = [
       },
       {
         path: 'choose-role',
-        canActivate: [chooseRoleGuard],
+        //canActivate: [chooseRoleGuard],
         component:ChooseRole,
         title: 'Choose Role'
       },
@@ -70,6 +73,7 @@ export const routes: Routes = [
 
        {
         path: 'student-dashboard',
+        //canActivate:[authGuard],
         component: StudentDasboard,
         title: 'Student Dashboard'
       },
@@ -78,6 +82,12 @@ export const routes: Routes = [
         path: 'complete-profile',
         component: StudentProfileCompletion,
         title: 'Complete Student Profile'
+      },
+      {
+         path: 'edit-profile', 
+         component: EditProfile, 
+         //canActivate: [roleGuard([Role.STUDENT])],
+         title: 'Edit Profile'
       }
     ]
       },
@@ -86,16 +96,24 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
         data: {role: Role.COMPANY},
         children: [
+       {
+        path: 'company-dashboard',
+        //canActivate:[authGuard],
+        component: CompanyDashboard,
+        title: 'Company Dashboard'
+      },
       {
-        path: 'company/complete-profile',
+        path: 'complete-profile',
         component: CompanyProfileCompletion,
         title: 'Complete Company Profile'
       },
       {
-        path: 'company/company-dashboard',
-        component: CompanyDashboard,
-        title: 'Company Dashboard'
+        path: 'create-job-posting',
+        component: CreateJobPosting,
+        //canActivate: [roleGuard([Role.COMPANY])],
+        title: 'CreateJobPosting'
       }
+     
        ]
       },
       {
@@ -106,18 +124,27 @@ export const routes: Routes = [
       },
       {
         path: 'jobs/:id',
+        canActivate:[authGuard],
         component: JobDetail,
         title: 'Job Detail'
 
       },
       {
         path: 'companies/:id',
+        canActivate:[authGuard],
         component: CompanyDetail,
         title: 'Company Detail'
 
       },
+      {
+        path: 'jobs/:id/apply', 
+        component: ApplyJob, 
+        canActivate: [roleGuard([Role.STUDENT])],
+        title: 'Apply Job'
 
-
+      },
+      
+      
       {
         path: 'users',
         component: Userlist,

@@ -1,68 +1,238 @@
-<div class="container py-5">
+<app-navbar />
 
-  <!-- Welcome -->
-  <div class="mb-5">
-    <h2 class="fw-bold">Welcome, {{ fullName }} 👋</h2>
-    <p class="text-muted">Manage your jobs and applications from here</p>
-  </div>
+<main class="container py-5">
+
+  @if(isLoading) {
+    <div class="text-center py-5 text-muted">
+      <div class="spinner-border spinner-border-sm"></div>
+    </div>
+  } @else {
 
   <div class="row g-4">
 
-    <!-- My Job Posts -->
-    <div class="col-md-6 col-lg-3">
-      <div class="card border-0 shadow-sm rounded-4 h-100">
-        <div class="card-body p-4">
-          <div class="fs-2 mb-3">📢</div>
-          <h5 class="fw-bold">My Job Posts</h5>
-          <p class="text-muted">View, edit and delete your job postings</p>
-          <a routerLink="/company/jobs" class="btn btn-outline-primary w-100 mt-2">
-            Manage Jobs
-          </a>
+    <!-- LEFT: Company profile card -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+
+        <!-- avatar + name -->
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center flex-shrink-0"
+            style="width: 60px; height: 60px;">
+            <i class="bi bi-building text-primary" style="font-size: 1.5rem;"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-0">{{ company?.fullName }}</h5>
+            <p class="text-muted small mb-0">{{ company?.email }}</p>
+          </div>
         </div>
+
+        <hr class="my-3">
+
+        <!-- verification status -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted small fw-semibold">Status</span>
+          @if(company?.verificationStatus === 'VERIFIED') {
+            <span class="badge rounded-pill bg-success-subtle text-success">
+              <i class="bi bi-patch-check me-1"></i>Verified
+            </span>
+          } @else {
+            <span class="badge rounded-pill bg-warning-subtle text-warning">
+              <i class="bi bi-clock me-1"></i>Pending verification
+            </span>
+          }
+        </div>
+
+        <!-- domain -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted small fw-semibold">Domain</span>
+          <span class="small">{{ company?.domainOfActivity }}</span>
+        </div>
+
+        <!-- company size -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted small fw-semibold">Company size</span>
+          <span class="small">{{ company?.companySize }} employees</span>
+        </div>
+
+        <!-- website -->
+        @if(company?.websiteLink) {
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted small fw-semibold">Website</span>
+            <a [href]="company?.websiteLink" target="_blank"
+              class="small text-primary text-decoration-none">
+              <i class="bi bi-box-arrow-up-right me-1"></i>Visit
+            </a>
+          </div>
+        }
+
+        <hr class="my-3">
+
+        <!-- description -->
+        <div class="mb-3">
+          <p class="text-muted small fw-semibold mb-1">About</p>
+          @if(company?.description) {
+            <p class="small mb-0">{{ company?.description }}</p>
+          } @else {
+            <p class="small text-muted fst-italic mb-0">No description yet.</p>
+          }
+        </div>
+
+        <a routerLink="/company/edit-profile"
+          class="btn btn-outline-primary btn-sm rounded-pill w-100 mt-2">
+          <i class="bi bi-pencil me-1"></i> Edit profile
+        </a>
+
       </div>
     </div>
 
-    <!-- Applications Received -->
-    <div class="col-md-6 col-lg-3">
-      <div class="card border-0 shadow-sm rounded-4 h-100">
-        <div class="card-body p-4">
-          <div class="fs-2 mb-3">📥</div>
-          <h5 class="fw-bold">Applications Received</h5>
-          <p class="text-muted">Review all applications sent to your postings</p>
-          <a routerLink="/company/applications" class="btn btn-outline-primary w-100 mt-2">
-            View Applications
-          </a>
-        </div>
-      </div>
-    </div>
+    <!-- RIGHT: tabs -->
+    <div class="col-lg-8">
 
-    <!-- Create Job Posting -->
-    <div class="col-md-6 col-lg-3">
-      <div class="card border-0 shadow-sm rounded-4 h-100">
-        <div class="card-body p-4">
-          <div class="fs-2 mb-3">➕</div>
-          <h5 class="fw-bold">Create Job Posting</h5>
-          <p class="text-muted">Post a new internship or job opportunity</p>
-          <a routerLink="/company/jobs/create" class="btn btn-primary w-100 mt-2">
-            Create Job
-          </a>
-        </div>
+      <!-- welcome header -->
+      <div class="mb-4">
+        <h4 class="fw-bold mb-1">Welcome back, {{ company?.fullName }} </h4>
+        <p class="text-muted">Manage your job postings and applications from here</p>
       </div>
-    </div>
 
-    <!-- My Profile -->
-    <div class="col-md-6 col-lg-3">
-      <div class="card border-0 shadow-sm rounded-4 h-100">
-        <div class="card-body p-4">
-          <div class="fs-2 mb-3">🏢</div>
-          <h5 class="fw-bold">Company Profile</h5>
-          <p class="text-muted">Update your company information and details</p>
-          <a routerLink="/company/profile" class="btn btn-outline-primary w-100 mt-2">
-            View Profile
-          </a>
-        </div>
-      </div>
-    </div>
+      <!-- tab nav -->
+      <ul class="nav nav-underline mb-4">
+        <li class="nav-item">
+          <button class="nav-link" [class.active]="activeTab === 'jobs'"
+            (click)="onTabChange('jobs')">
+            <i class="bi bi-briefcase me-1"></i> My jobs
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" [class.active]="activeTab === 'applications'"
+            (click)="onTabChange('applications')">
+            <i class="bi bi-inbox me-1"></i> Applications received
+          </button>
+        </li>
+      </ul>
 
+      <!-- TAB: My jobs -->
+      @if(activeTab === 'jobs') {
+  <div class="d-flex justify-content-end mb-3">
+    <a routerLink="/company/create-job-posting"
+      class="btn btn-primary btn-sm rounded-pill">
+      <i class="bi bi-plus-lg me-1"></i> Create job posting
+    </a>
   </div>
-</div>
+
+  @if(isLoadingJobs) {
+    <div class="text-center py-5 text-muted">
+      <div class="spinner-border spinner-border-sm"></div>
+    </div>
+  } @else if(jobPostings.length === 0) {
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4 text-center text-muted">
+        <i class="bi bi-briefcase" style="font-size: 2rem;"></i>
+        <p class="mt-2">No job postings yet.</p>
+      </div>
+    </div>
+  } @else {
+    <div class="card border-0 shadow-sm rounded-4">
+      @for(job of jobPostings; track job.id) {
+        <div class="p-4" [class.border-bottom]="!$last">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="fw-semibold mb-1">{{ job.jobTitle }}</h6>
+              <p class="text-muted small mb-0">
+                <i class="bi bi-geo-alt me-1"></i>{{ job.location ?? 'No location' }}
+                &nbsp;·&nbsp;
+                <i class="bi bi-calendar3 me-1"></i>{{ job.createdAt | date:'mediumDate' }}
+              </p>
+            </div>
+            <div class="d-flex flex-column align-items-end gap-2">
+              <span class="badge rounded-pill"
+                [ngClass]="{
+                  'bg-success-subtle text-success': job.status === 'OPEN',
+                  'bg-secondary-subtle text-secondary': job.status === 'CLOSED',
+                  'bg-warning-subtle text-warning': job.status === 'DRAFT',
+                  'bg-danger-subtle text-danger': job.status === 'ARCHIVED'
+                }">
+                {{ job.status }}
+              </span>
+              <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+}
+
+      <!-- TAB: Applications received -->
+      @if(activeTab === 'applications') {
+
+  @if(isLoadingApplications) {
+    <div class="text-center py-5 text-muted">
+      <div class="spinner-border spinner-border-sm"></div>
+    </div>
+  } @else if(applications.length === 0) {
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4 text-center text-muted">
+        <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+        <p class="mt-2">No applications received yet.</p>
+      </div>
+    </div>
+  } @else {
+    <div class="card border-0 shadow-sm rounded-4">
+      @for(app of applications; track app.id) {
+        <div class="p-4" [class.border-bottom]="!$last">
+          <div class="d-flex justify-content-between align-items-start">
+
+            <div>
+              <h6 class="fw-semibold mb-1">{{ app.studentName }}</h6>
+              <p class="text-muted small mb-0">
+                <i class="bi bi-briefcase me-1"></i>{{ app.jobTitle }}
+                &nbsp;·&nbsp;
+                <i class="bi bi-calendar3 me-1"></i>{{ app.appliedAt | date:'mediumDate' }}
+              </p>
+            </div>
+
+            <div class="d-flex flex-column align-items-end gap-2">
+              <span class="badge rounded-pill" [ngClass]="getStatusClass(app.status)">
+                {{ app.status }}
+              </span>
+              <div class="d-flex gap-2">
+                @if(app.status === 'PENDING') {
+                  <button class="btn btn-sm btn-outline-secondary"
+                    (click)="review(app.id)">
+                    Review
+                  </button>
+                }
+                @if(app.status === 'REVIEWED') {
+                  <button class="btn btn-sm btn-outline-success"
+                    (click)="accept(app.id)">
+                    Accept
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger"
+                    (click)="reject(app.id)">
+                    Reject
+                  </button>
+                }
+              </div>
+            </div>
+
+          </div>
+        </div>
+      }
+    </div>
+  }
+}
+
+    </div>
+  </div>
+  }
+
+</main>
+
+<app-footer />

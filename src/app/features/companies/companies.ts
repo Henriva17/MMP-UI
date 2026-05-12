@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 
 import { CompanyResponse } from '../../shared/models/responces/company-response';
 import { CompanyService } from '../../services/company.service';
+import { Footer } from '../../shared/footer/footer';
+import { Navbar } from '../../shared/navbar/navbar';
 
 
 @Component({
   selector: 'app-companies',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, FormsModule, Footer, Navbar, RouterLink],
   templateUrl: './companies.html',
   styleUrl: './companies.css',
 })

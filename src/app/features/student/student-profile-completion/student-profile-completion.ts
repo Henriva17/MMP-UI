@@ -57,7 +57,7 @@ private userService = inject(UserService);
     this.userService.createStudentProfile(userId, this.form).subscribe({
       next: () => {
         this.isLoading = false;
-        this.router.navigate(['/student/student-dashboard']);
+        this.router.navigate(['/student-dashboard']);
       },
       error: () => {
         this.isLoading = false;
@@ -66,3 +66,5 @@ private userService = inject(UserService);
     });
   }
 }
+
+

@@ -1,48 +1,4 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-primary" routerLink="/">MMP</a>
-
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center">
-         <li class="nav-item">
-          <a class="nav-link" routerLink="/home">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/jobs">Jobs</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/companies">Companies</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#about">About</a>
-        </li>
-
-        <li class="nav-item ms-lg-3">
-          <a class="btn btn-outline-primary" routerLink="/login">Login</a>
-        </li>
-
-        <li class="nav-item ms-lg-2">
-          <a class="btn btn-primary" routerLink="/register">Sign up</a>
-        </li>
-
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
+<app-navbar/>
 
 <section class="min-vh-100 d-flex align-items-center bg-light py-5">
   <div class="container">
@@ -53,22 +9,25 @@
 
             <div class="text-center mb-4">
               <h2 class="fw-bold mb-2">Welcome back</h2>
-              <p class="text-muted mb-0">
-                Login to your account
-              </p>
+              <p class="text-muted mb-0">Login to your account</p>
             </div>
 
-            <form (ngSubmit)="onSubmit()">
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
 
               <div class="mb-3">
                 <label class="form-label fw-semibold">Email</label>
                 <input
                   type="email"
                   class="form-control form-control-lg"
+                  [class.is-invalid]="emailField.touched && emailField.invalid"
                   [(ngModel)]="email"
                   name="email"
+                  #emailField="ngModel"
                   required
-                />
+                  email/>
+                <div class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
               </div>
 
               <div class="mb-4">
@@ -76,20 +35,31 @@
                 <input
                   type="password"
                   class="form-control form-control-lg"
+                  [class.is-invalid]="passwordField.touched && passwordField.invalid"
                   [(ngModel)]="password"
                   name="password"
-                  required
-                />
+                  #passwordField="ngModel"
+                  required/>
+                <div class="invalid-feedback">
+                  Password is required.
+                </div>
               </div>
 
-              <button type="submit" class="btn btn-primary btn-lg w-100">
-                Login
+              @if(errorMessage) {
+                <div class="alert alert-danger py-0 mb-2">
+                  <i class="bi bi-exclamation-circle me-2"></i>{{ errorMessage }}
+                </div>
+              }
+
+              <button type="submit" class="btn btn-primary btn-lg w-100"
+                [disabled]="isLoading || loginForm.invalid">
+                {{ isLoading ? 'Logging in...' : 'Login' }}
               </button>
 
             </form>
 
             <p class="text-center text-muted mt-4 mb-0">
-              Don’t have an account?
+              Don't have an account?
               <a routerLink="/register" class="fw-semibold text-decoration-none">Create one</a>
             </p>
 
@@ -100,34 +70,4 @@
   </div>
 </section>
 
-<!-- Loading feedback -->
-<!--@if(isLoading) {
-  <div class="text-center mb-3">
-    <div class="spinner-border spinner-border-sm text-primary"></div>
-  </div>
-}
-
-
-@if(errorMessage) {
-  <div class="alert alert-danger py-2">{{ errorMessage }}</div>
-}
-
-<button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="isLoading">
-  {{ isLoading ? 'Logging in...' : 'Login' }}
-</button>-->
-
-<!-- Footer -->
-<footer class="bg-dark text-white py-4">
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-    <div class="mb-3 mb-md-0">
-      <strong>MMP</strong> © 2026
-    </div>
-
-    <div>
-      <a href="#about" class="text-white text-decoration-none me-3">About</a>
-      <a href="#" class="text-white text-decoration-none me-3">Contact</a>
-      <a href="#" class="text-white text-decoration-none me-3">LinkedIn</a>
-      <a href="#" class="text-white text-decoration-none">GitHub</a>
-    </div>
-  </div>
-</footer>
+<app-footer/>

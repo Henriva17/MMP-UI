@@ -1,6 +1,6 @@
 export enum JobPostingStatus{
-     DRAFT,
-    OPEN,
-    CLOSED,
-    ARCHIVED
+      DRAFT = 'DRAFT',
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+  ARCHIVED = 'ARCHIVED'
 }

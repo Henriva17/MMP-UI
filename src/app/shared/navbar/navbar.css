@@ -1,0 +1,25 @@
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+  border-radius: 12px;
+}
+
+.dropdown-item {
+  padding: 0.6rem 1.2rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f4ff;
+}

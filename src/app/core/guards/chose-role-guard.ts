@@ -24,6 +24,7 @@ export const chooseRoleGuard: CanActivateFn = () => {
     router.navigate(['/company/dashboard']);
     return false;
   }
+ 
 
   //  role is USER → allowed to choose
   return true;

@@ -1,44 +1,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"> <!----Google font location code -->
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-primary" routerLink="/">MMP</a>
-
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/jobs">Jobs</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/companies">Companies</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#about">About</a>
-        </li>
-
-        <li class="nav-item ms-lg-3">
-          <a class="btn btn-outline-primary" routerLink="/login">Login</a>
-        </li>
-
-        <li class="nav-item ms-lg-2">
-          <a class="btn btn-primary" routerLink="/register">Sign up</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<app-navbar/>
 <div class="container py-5">
 
   <!-- Back -->
@@ -129,9 +92,13 @@
 
         <!-- Apply Button -->
         <div class="d-grid">
-          <button class="btn btn-primary btn-lg">
-            Apply Now
-          </button>
+       <button
+  *ngIf="authService.getRole() === 'STUDENT'"
+  [routerLink]="['/jobs', job.id, 'apply']"
+  class="btn btn-primary"
+>
+  Apply now
+</button>
         </div>
 
       </div>
@@ -141,17 +108,4 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-white py-4">
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-    <div class="mb-3 mb-md-0">
-      <strong>MMP</strong> © 2026
-    </div>
-
-    <div>
-      <a href="#about" class="text-white text-decoration-none me-3">About</a>
-      <a href="#" class="text-white text-decoration-none me-3">Contact</a>
-      <a href="#" class="text-white text-decoration-none me-3">LinkedIn</a>
-      <a href="#" class="text-white text-decoration-none">GitHub</a>
-    </div>
-  </div>
-</footer>
+<app-footer/>

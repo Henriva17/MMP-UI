@@ -21,10 +21,21 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, request).pipe(
       tap((response) => {
         // save token and role in localStorage
+        console.log('Full AuthResponse:', JSON.stringify(response));
+        
+
         localStorage.setItem('token', response.token);
         localStorage.setItem('role', response.role);
         localStorage.setItem('userId',response.userId.toString());
+        if(response.studentId != null){
+          localStorage.setItem('studentId', response.studentId.toString());
+        } // deze conditie niet hold dat gaat altijd scrache for User en Company
+        if (response.companyId != null) {
+    localStorage.setItem('companyId', response.companyId.toString());
+  
+  }
         localStorage.setItem('fullName', response.fullName);
+         
       })
     );
   }
@@ -48,6 +59,12 @@ export class AuthService {
   getUserId(): number {
   return Number(localStorage.getItem('userId'));
   }
+  getStudentId(): number {
+  return Number(localStorage.getItem('studentId'));
+}
+getCompanyId(): number {
+  return Number(localStorage.getItem('companyId')?? localStorage.getItem('userId'));
+}
 
   getFullName(): string | null {
     return localStorage.getItem('fullName');

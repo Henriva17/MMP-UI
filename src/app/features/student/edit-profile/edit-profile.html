@@ -1,0 +1,117 @@
+<app-navbar />
+
+<div class="container py-5" style="max-width: 680px;">
+
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <button class="btn btn-outline-secondary btn-sm rounded-pill" (click)="goBack()">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </button>
+    <h4 class="mb-0 fw-semibold">Edit profile</h4>
+  </div>
+
+  @if(isLoading) {
+    <div class="text-center py-5 text-muted">
+      <div class="spinner-border spinner-border-sm"></div>
+    </div>
+  } @else {
+
+    @if(successMessage) {
+      <div class="alert alert-success alert-dismissible" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" (click)="successMessage = null"></button>
+      </div>
+    }
+
+    @if(errorMessage) {
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        {{ errorMessage }}
+        <button type="button" class="btn-close" (click)="errorMessage = null"></button>
+      </div>
+    }
+
+    <!-- Bio -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+      <div class="card-body p-4">
+        <h6 class="fw-semibold mb-3">
+          <i class="bi bi-person-lines-fill me-2"></i>Bio
+        </h6>
+        <form [formGroup]="bioForm" (ngSubmit)="saveBio()">
+          <textarea
+            class="form-control"
+            formControlName="bio"
+            rows="4"
+            placeholder="Tell employers a bit about yourself..."
+          ></textarea>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <small class="text-muted">
+              {{ bioForm.value.bio?.length ?? 0 }} / 500
+            </small>
+            <button
+              type="submit"
+              class="btn btn-primary btn-sm rounded-pill"
+              [disabled]="bioForm.invalid || isSaving">
+              Save bio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4">
+        <h6 class="fw-semibold mb-3">
+          <i class="bi bi-tools me-2"></i>Skills
+        </h6>
+
+        <!-- existing skills -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          @for(skill of skills; track skill) {
+            <span class="badge rounded-pill bg-light text-dark border d-flex align-items-center gap-1 px-3 py-2">
+              {{ skill }}
+              <button
+                type="button"
+                class="btn-close btn-close-sm ms-1"
+                style="font-size: 0.6rem;"
+                (click)="removeSkill(skill)">
+              </button>
+            </span>
+          }
+          @if(skills.length === 0) {
+            <p class="text-muted small mb-0">No skills added yet.</p>
+          }
+        </div>
+
+        <!-- add skill -->
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="e.g. Angular, Java, Docker..."
+            [(ngModel)]="newSkill"
+            (keydown.enter)="addSkill(); $event.preventDefault()">
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+            (click)="addSkill()">
+            <i class="bi bi-plus-lg"></i> Add
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-sm rounded-pill"
+            [disabled]="isSaving"
+            (click)="saveSkills()">
+            Save skills
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  }
+
+</div>
+
+<app-footer />

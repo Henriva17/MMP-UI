@@ -4,11 +4,13 @@ import { RouterLink } from '@angular/router';
 import { JobpostingService } from '../../../services/jobposting.service';
 import { JobPosting } from '../../../shared/models/job-posting';
 import { JobPostingResponse } from '../../../shared/models/responces/job-posting-response';
+import { Footer } from '../../../shared/footer/footer';
+import { Navbar } from '../../../shared/navbar/navbar';
 
 @Component({
   selector: 'app-job-list',
   standalone:true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, Footer, Navbar],
   templateUrl: './job-list.html',
   styleUrl: './job-list.css',
 })

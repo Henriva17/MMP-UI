@@ -3,11 +3,13 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CompanyService } from '../../../services/company.service';
 import { CompanyResponse } from '../../../shared/models/responces/company-response';
+import { Footer } from '../../../shared/footer/footer';
+import { Navbar } from '../../../shared/navbar/navbar';
 
 @Component({
   selector: 'app-company-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, Footer, Navbar],
   templateUrl: './company-detail.html',
   styleUrl: './company-detail.css',
 })

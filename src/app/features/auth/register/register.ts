@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { Router, RouterLink } from '@angular/router';
+import { Navbar } from '../../../shared/navbar/navbar';
+import { Footer } from '../../../shared/footer/footer';
 
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, Navbar, Footer],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })

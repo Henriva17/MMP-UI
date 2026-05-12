@@ -1,0 +1,171 @@
+<app-navbar />
+
+<main class="py-5 bg-light">
+  <div class="container">
+    <div class="apply-container mx-auto">
+
+      <ng-container *ngIf="!submitted; else successBlock">
+
+        <!-- Job Summary Header -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+          <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <p class="text-muted mb-1">
+                  {{ job?.companyName }} • {{ job?.location }}
+                </p>
+
+                <h3 class="fw-bold mb-3">
+                  {{ job?.jobTitle }}
+                </h3>
+
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge bg-primary-subtle text-primary">
+                    {{ job?.jobType }}
+                  </span>
+
+                  <span class="badge bg-secondary-subtle text-secondary">
+                    {{ job?.workMode }}
+                  </span>
+
+                  <span class="badge bg-success-subtle text-success">
+                    {{ job?.status }}
+                  </span>
+                </div>
+              </div>
+
+              <button class="btn btn-outline-secondary btn-sm" (click)="goBack()">
+                Back
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Applicant Info -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+          <div class="card-body p-4 d-flex justify-content-between align-items-center">
+            <div>
+              <p class="mb-0 fw-semibold">
+                {{ fullName }}
+              </p>
+              <small class="text-muted">
+                Applying as: student
+              </small>
+            </div>
+
+            <span class="badge bg-success-subtle text-success">
+              Authenticated
+            </span>
+          </div>
+        </div>
+
+        <!-- Application Form -->
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body p-4">
+
+            <h4 class="fw-bold mb-4">Submit your application</h4>
+
+            <form [formGroup]="form" (ngSubmit)="submit()">
+
+              <div class="mb-4">
+                <label for="motivationLetter" class="form-label fw-semibold">
+                  Motivation letter <span class="text-danger">*</span>
+                </label>
+
+                <textarea
+                  id="motivationLetter"
+                  formControlName="motivationLetter"
+                  rows="7"
+                  class="form-control"
+                  placeholder="Tell the employer why you're the right fit for this role. Minimum 50 characters, max 3000."
+                ></textarea>
+
+                <div class="d-flex justify-content-between mt-2">
+                  <small
+                    class="text-danger"
+                    *ngIf="letterControl.touched && letterControl.errors?.['minlength']"
+                  >
+                    Minimum 50 characters required.
+                  </small>
+
+                  <small
+                    class="ms-auto"
+                    [class.text-danger]="charCount > 3000"
+                    [class.text-muted]="charCount <= 3000"
+                  >
+                    {{ charCount }} / 3000
+                  </small>
+                </div>
+              </div>
+
+              <p class="alert alert-danger" *ngIf="errorMessage">
+                {{ errorMessage }}
+              </p>
+
+              <div class="d-flex gap-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg w-50"
+                  (click)="goBack()"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg w-50"
+                  [disabled]="form.invalid || isSubmitting"
+                >
+                  {{ isSubmitting ? 'Submitting...' : 'Submit application' }}
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+      </ng-container>
+
+      <!-- Success State -->
+      <ng-template #successBlock>
+        <div class="card border-success shadow-sm rounded-4">
+          <div class="card-body p-4">
+
+            <h4 class="fw-bold mb-2 text-success">
+              Application submitted
+            </h4>
+
+            <p class="mb-1">
+              {{ job?.jobTitle }} • {{ job?.companyName }}
+            </p>
+
+            <span class="badge bg-warning-subtle text-warning mb-4">
+              Pending review
+            </span>
+
+            <p class="text-muted mt-3">
+              Your application has been submitted successfully and is now waiting for company review.
+            </p>
+
+            <div class="d-flex gap-3 mt-4">
+              <button class="btn btn-outline-secondary w-50" (click)="goBack()">
+                Back to job
+              </button>
+
+              <a class="btn btn-primary w-50" (click)="viewMyApplication()">
+                View my applications
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</main>
+
+<app-footer />

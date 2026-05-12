@@ -1,20 +1,23 @@
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../services/AuthService';
 import { inject } from '@angular/core';
+import { Role } from '../../shared/models/enums/role';
 
-export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-  
+// role.guard.ts
+export const roleGuard = (allowedRoles: Role[]): CanActivateFn => {
+  return () => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
 
-  const expectedRole = route.data['role']; // role passed from route definition
-  const userRole = authService.getRole();
+    if (!authService.isLoggedIn()) {
+      return router.createUrlTree(['/login']);
+    }
 
+    const role = authService.getRole();
+    if (role && allowedRoles.includes(role)) {
+      return true;
+    }
 
-  if (userRole === expectedRole) {
-    return true;
-  }
-
-  router.navigate(['/login']);
-  return false;
+    return router.createUrlTree(['/jobs']);
+  };
 };

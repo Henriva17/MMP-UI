@@ -1,0 +1,186 @@
+<app-navbar />
+
+<main class="container py-5" style="max-width: 720px;">
+
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <button class="btn btn-outline-secondary btn-sm rounded-pill" (click)="goBack()">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </button>
+    <h4 class="fw-bold mb-0">Create job posting</h4>
+  </div>
+
+  @if(submitted) {
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-5 text-center">
+        <i class="bi bi-check-circle text-success" style="font-size: 3rem;"></i>
+        <h5 class="fw-bold mt-3">Job posting created!</h5>
+        <p class="text-muted">Your posting is now live and visible to students.</p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <button class="btn btn-outline-secondary rounded-pill" (click)="goBack()">
+            Back to dashboard
+          </button>
+          <button class="btn btn-primary rounded-pill"
+            (click)="submitted = false; form.reset(); skills = []">
+            Create another
+          </button>
+        </div>
+      </div>
+    </div>
+
+  } @else {
+
+    @if(errorMessage) {
+      <div class="alert alert-danger alert-dismissible">
+        {{ errorMessage }}
+        <button type="button" class="btn-close" (click)="errorMessage = null"></button>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+          <h6 class="fw-semibold mb-3">
+            <i class="bi bi-briefcase me-2"></i>Job details
+          </h6>
+
+          <!-- job title -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">
+              Job title <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control" formControlName="jobTitle"
+              placeholder="e.g. Junior Software Engineer">
+            @if(form.controls.jobTitle.touched && form.controls.jobTitle.errors?.['required']) {
+              <div class="text-danger small mt-1">Job title is required.</div>
+            }
+          </div>
+
+          <!-- description -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Description</label>
+            <textarea class="form-control" formControlName="description"
+              rows="4" placeholder="Describe the role, responsibilities..."></textarea>
+          </div>
+
+          <!-- job type + work mode -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">
+                Job type <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" formControlName="jobType">
+                <option value="">Select job type</option>
+                @for(type of jobTypes; track type) {
+                  <option [value]="type">{{ type }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">
+                Work mode <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" formControlName="workMode">
+                <option value="">Select work mode</option>
+                @for(mode of workModes; track mode) {
+                  <option [value]="mode">{{ mode }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <!-- location -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Location</label>
+            <input type="text" class="form-control" formControlName="location"
+              placeholder="e.g. Brussels, Ghent, Remote">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+          <h6 class="fw-semibold mb-3">
+            <i class="bi bi-mortarboard me-2"></i>Requirements
+          </h6>
+
+          <!-- education level -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">
+              Required education level <span class="text-danger">*</span>
+            </label>
+            <select class="form-select" formControlName="requiredEducationLevel">
+              <option value="">Select education level</option>
+              @for(level of educationLevels; track level) {
+                <option [value]="level">{{ level }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- skills -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Required skills</label>
+            <div class="d-flex flex-wrap gap-2 mb-2">
+              @for(skill of skills; track skill) {
+                <span class="badge rounded-pill bg-light text-dark border d-flex align-items-center gap-1 px-3 py-2">
+                  {{ skill }}
+                  <button type="button" class="btn-close ms-1"
+                    style="font-size: 0.6rem;"
+                    (click)="removeSkill(skill)">
+                  </button>
+                </span>
+              }
+              @if(skills.length === 0) {
+                <p class="text-muted small mb-0">No skills added yet.</p>
+              }
+            </div>
+            <div class="input-group">
+              <input type="text" class="form-control"
+                placeholder="e.g. Angular, Java, Docker..."
+                [(ngModel)]="newSkill"
+                [ngModelOptions]="{standalone: true}"
+                (keydown.enter)="addSkill(); $event.preventDefault()">
+              <button class="btn btn-outline-primary" type="button" (click)="addSkill()">
+                <i class="bi bi-plus-lg"></i> Add
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+          <h6 class="fw-semibold mb-3">
+            <i class="bi bi-calendar3 me-2"></i>Deadline
+          </h6>
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">
+              Application deadline <span class="text-danger">*</span>
+            </label>
+            <input type="date" class="form-control" formControlName="applicationDeadline">
+            @if(form.controls.applicationDeadline.touched && form.controls.applicationDeadline.errors?.['required']) {
+              <div class="text-danger small mt-1">Deadline is required.</div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill"
+          (click)="goBack()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary rounded-pill"
+          [disabled]="form.invalid || isSubmitting">
+          {{ isSubmitting ? 'Creating...' : 'Create job posting' }}
+        </button>
+      </div>
+
+    </form>
+  }
+
+</main>
+
+<app-footer />

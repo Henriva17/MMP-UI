@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms';
 
 import { JobPostingResponse } from '../../shared/models/responces/job-posting-response';
 import { JobpostingService } from '../../services/jobposting.service';
+import { Footer } from '../../shared/footer/footer';
+import { Navbar } from '../../shared/navbar/navbar';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, Footer, Navbar],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

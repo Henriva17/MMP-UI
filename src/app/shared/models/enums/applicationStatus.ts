@@ -1,0 +1,7 @@
+export enum JobApplicationStatus {
+   PENDING = 'PENDING',
+  REVIEWED = 'REVIEWED',
+  ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED',
+  WITHDRAWN = 'WITHDRAWN'
+}
