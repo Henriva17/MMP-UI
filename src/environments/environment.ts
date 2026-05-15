@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-    url: 'http://localhost:8080/api'
+    url:  'https://mmp-production-ac0b.up.railway.app/api'
   };
