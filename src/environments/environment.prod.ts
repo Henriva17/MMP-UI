@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'https://your-app.railway.app/api'  // Railway url link
+  url: 'https://mmp-production-ac0b.up.railway.app/api'  // Railway url link
 };
