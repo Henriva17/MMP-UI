@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { CreateCompanyProfileRequest } from '../shared/models/requests/create-company-profile-request';
 import { CompanyResponse } from '../shared/models/responces/company-response';
 

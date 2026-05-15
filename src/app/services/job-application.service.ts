@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { environment } from "../../environments/environment.development";
+import { environment } from '../../environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { ApplyToJobRequest } from "../shared/models/requests/job-application-request";
 import { JobApplicationResponse } from "../shared/models/responces/job-application-response";

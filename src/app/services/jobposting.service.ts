@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { CreateJobPostingRequest } from '../shared/models/requests/create-job-posting-request';
 import { JobPostingResponse } from '../shared/models/responces/job-posting-response';
 

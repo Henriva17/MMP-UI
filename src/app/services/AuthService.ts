@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { AuthResponse } from '../shared/models/responces/auth-response';
 import { LoginRequest } from '../shared/models/requests/login-request';
 import { Role } from '../shared/models/enums/role';
