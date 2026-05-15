@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;  /* back to 100vh, this is now safe */
+}
+
+main {
+  flex: 1;  /*om de main een flex te geven zodat de footer op zijn positie staat*/
+}
