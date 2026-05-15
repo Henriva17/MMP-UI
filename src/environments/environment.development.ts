@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  url:  'https://mmp-ztuk.onrender.com/api'
+  url:  'http://localhost:8080/api'
 };

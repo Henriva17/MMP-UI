@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'https://mmp-ztuk.onrender.com/api'  // your cloud Spring Boot
+  url: 'https://your-app.railway.app/api'  // Railway url link
 };
