@@ -27,13 +27,13 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('role', response.role);
         localStorage.setItem('userId',response.userId.toString());
-        if(response.studentId != null){
-          localStorage.setItem('studentId', response.studentId.toString());
-        } // deze conditie niet hold dat gaat altijd scrache for User en Company
-        if (response.companyId != null) {
-    localStorage.setItem('companyId', response.companyId.toString());
-  
-  }
+        if (response.studentId) {
+  localStorage.setItem('studentId', response.studentId.toString());
+}
+
+if (response.companyId) {
+  localStorage.setItem('companyId', response.companyId.toString());
+}
         localStorage.setItem('fullName', response.fullName);
          
       })

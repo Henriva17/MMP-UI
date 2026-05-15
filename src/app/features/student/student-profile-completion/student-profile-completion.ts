@@ -55,15 +55,21 @@ private userService = inject(UserService);
     const userId = this.authService.getUserId(); // 
 
     this.userService.createStudentProfile(userId, this.form).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigate(['/student-dashboard']);
-      },
-      error: () => {
-        this.isLoading = false;
-        this.errorMessage = 'Failed to complete profile. Please try again.';
-      }
-    });
+  next: (response: any) => {
+    this.isLoading = false;
+    
+    // Save the returned studentId to localStorage
+    if (response?.id) {
+      localStorage.setItem('studentId', response.studentId.toString());
+    }
+    
+    this.router.navigate(['/student-dashboard']);
+  },
+  error: () => {
+    this.isLoading = false;
+    this.errorMessage = 'Failed to complete profile. Please try again.';
+  }
+});
   }
 }
 

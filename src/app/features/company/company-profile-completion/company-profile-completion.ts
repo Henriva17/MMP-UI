@@ -35,14 +35,19 @@ export class CompanyProfileCompletion {
     const userId = this.authService.getUserId();
 
     this.userService.createCompanyProfile(userId, this.form).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigate(['/company/company-dashboard']);
-      },
-      error: () => {
-        this.isLoading = false;
-        this.errorMessage = 'Failed to complete profile. Please try again.';
-      }
-    });
+  next: (response: any) => {
+    this.isLoading = false;
+
+    if (response?.id) {
+      localStorage.setItem('companyId', response.companyId.toString());
+    }
+
+    this.router.navigate(['/company/company-dashboard']);
+  },
+  error: () => {
+    this.isLoading = false;
+    this.errorMessage = 'Failed to complete profile. Please try again.';
+  }
+});
   }
 }
