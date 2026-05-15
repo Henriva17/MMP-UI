@@ -41,6 +41,7 @@ if (response.companyId) {
   }
 
   logout(): void {
+    localStorage.clear();
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     this.router.navigate(['/login']);

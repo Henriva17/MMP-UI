@@ -57,12 +57,16 @@ private userService = inject(UserService);
     this.userService.createStudentProfile(userId, this.form).subscribe({
   next: (response: any) => {
     this.isLoading = false;
-    
-    // Save the returned studentId to localStorage
-    if (response?.id) {
+
+    // Clear old studentId first
+    localStorage.removeItem('studentId');
+    localStorage.removeItem('companyId');
+
+    // Save new one
+    if (response?.studentId) {
       localStorage.setItem('studentId', response.studentId.toString());
     }
-    
+
     this.router.navigate(['/student-dashboard']);
   },
   error: () => {

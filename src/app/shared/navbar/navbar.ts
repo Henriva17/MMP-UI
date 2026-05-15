@@ -27,6 +27,7 @@ export class Navbar implements OnInit{
   logout(): void {
     this.authService.logout();
     this.isLoggedIn = false;
+    this.router.navigate(['/login']);
   }
 
   getProfileRoute(): string {
