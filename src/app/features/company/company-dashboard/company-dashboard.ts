@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { Footer } from "../../../shared/footer/footer";
 import { Navbar } from "../../../shared/navbar/navbar";
 import { AuthService } from "../../../services/AuthService";
@@ -20,6 +20,7 @@ import { JobApplicationStatus } from "../../../shared/models/enums/applicationSt
   styleUrl: './company-dashboard.css',
 })
 export class CompanyDashboard implements OnInit {
+  private router = inject(Router);
   private authService = inject(AuthService);
   private companyService = inject(CompanyService);
   private jobPostingService = inject(JobpostingService);
@@ -38,9 +39,29 @@ isLoadingJobs = false;
 applications: JobApplicationResponse[] = [];
 isLoadingApplications = false;
 
+ngOnInit(): void {
+  // Guard against null
+  if (!this.companyId) {
+    this.router.navigate(['/login']);
+    return;
+  }
+
+  this.companyService.getById(this.companyId).subscribe({
+    next: (data) => {
+      this.company = data;
+      this.isLoading = false;
+    },
+    error: () => this.isLoading = false
+  });
+
+  this.loadJobs();
+}
+
 loadJobs(): void {
+  if (!this.companyId) return;  // ← guard
+
   this.isLoadingJobs = true;
-  this.jobPostingService.getByCompany(this.companyId).subscribe({
+  this.jobPostingService.getByCompany(this.companyId).subscribe({  // ← fixed this.id → this.companyId
     next: (data) => {
       this.jobPostings = data;
       this.isLoadingJobs = false;
@@ -50,6 +71,8 @@ loadJobs(): void {
 }
 
 loadApplications(): void {
+  if (!this.companyId) return;  // ← guard
+
   this.isLoadingApplications = true;
   this.jobApplicationService.getByCompany(this.companyId).subscribe({
     next: (data) => {
@@ -59,18 +82,6 @@ loadApplications(): void {
     error: () => this.isLoadingApplications = false
   });
 }
-
-  ngOnInit(): void {
-
-    this.companyService.getById(this.companyId).subscribe({
-      next: (data) => {
-        this.company = data;
-        this.isLoading = false;
-      },
-      error: () => this.isLoading = false
-    });
-     this.loadJobs(); 
-  }
 
   onTabChange(tab: 'jobs' | 'applications'): void {
   this.activeTab = tab;

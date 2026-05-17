@@ -56,6 +56,8 @@ private userService = inject(UserService);
 
     this.userService.createStudentProfile(userId, this.form).subscribe({
   next: (response: any) => {
+console.log('PROFILE RESPONSE:', response);  // log check
+
     this.isLoading = false;
 
     // Clear old studentId first
@@ -63,13 +65,14 @@ private userService = inject(UserService);
     localStorage.removeItem('companyId');
 
     // Save new one
-    if (response?.studentId) {
+    if (response?.id) {
       localStorage.setItem('studentId', response.studentId.toString());
     }
 
     this.router.navigate(['/student-dashboard']);
   },
-  error: () => {
+  error: (err) => {
+    console.log('PROFILE ERROR:', err); //Log cehck
     this.isLoading = false;
     this.errorMessage = 'Failed to complete profile. Please try again.';
   }
