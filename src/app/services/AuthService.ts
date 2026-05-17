@@ -60,13 +60,15 @@ if (response.companyId) {
   getUserId(): number {
   return Number(localStorage.getItem('userId'));
   }
-  getStudentId(): number {
-  return Number(localStorage.getItem('studentId'));
+  getStudentId(): number | null {
+  const id = localStorage.getItem('studentId');
+  return id ? Number(id) : null;
 }
-getCompanyId(): number {
-  return Number(localStorage.getItem('companyId')?? localStorage.getItem('userId'));
+// auth.service.ts
+getCompanyId(): number | null {
+  const id = localStorage.getItem('companyId');
+  return id ? Number(id) : null;
 }
-
   getFullName(): string | null {
     return localStorage.getItem('fullName');
   }

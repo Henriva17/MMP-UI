@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/AuthService';
 import { Footer } from '../../../shared/footer/footer';
 import { Navbar } from '../../../shared/navbar/navbar';
@@ -26,7 +26,7 @@ export class StudentDasboard implements OnInit {
   applications: JobApplicationResponse[] = [];
   isLoadingApplications = false;
 
-
+private router = inject(Router);
 private authService = inject(AuthService);
 private studentService = inject(StudentService);
 private applicationService = inject(JobApplicationService);
@@ -39,10 +39,15 @@ private studentId = this.authService.getStudentId();
 
 
 ngOnInit(): void {
-  // read tab from query param
   const tab = this.route.snapshot.queryParamMap.get('tab') as 'profile' | 'applications';
   if (tab) {
     this.onTabChange(tab);
+  }
+
+  // Guard against null or 0
+  if (!this.studentId) {
+    this.router.navigate(['/login']);
+    return;
   }
 
   this.studentService.getStudentById(this.studentId).subscribe({
@@ -54,18 +59,24 @@ ngOnInit(): void {
   });
 }
 
-  loadApplications(): void {
-    this.isLoadingApplications = true;
-    this.applicationService.getByStudent(this.studentId).subscribe({
-      next: (data) => {
-        this.applications = data;
-        this.isLoadingApplications = false;
-      },
-      error: () => {
-        this.isLoadingApplications = false;
-      }
-    });
+loadApplications(): void {
+  // Guard against null
+  if (!this.studentId) {
+    this.router.navigate(['/login']);
+    return;
   }
+
+  this.isLoadingApplications = true;
+  this.applicationService.getByStudent(this.studentId).subscribe({
+    next: (data) => {
+      this.applications = data;
+      this.isLoadingApplications = false;
+    },
+    error: () => {
+      this.isLoadingApplications = false;
+    }
+  });
+}
 
   onTabChange(tab: 'profile' | 'jobs' | 'applications'): void {
     this.activeTab = tab;
