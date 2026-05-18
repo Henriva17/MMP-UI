@@ -39,7 +39,7 @@ export class CompanyProfileCompletion {
     this.isLoading = false;
 
     if (response?.id) {
-      localStorage.setItem('companyId', response.companyId.toString());
+      localStorage.setItem('companyId', response.id.toString());
     }
 
     this.router.navigate(['/company/company-dashboard']);

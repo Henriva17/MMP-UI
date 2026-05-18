@@ -66,7 +66,7 @@ console.log('PROFILE RESPONSE:', response);  // log check
 
     // Save new one
     if (response?.id) {
-      localStorage.setItem('studentId', response.studentId.toString());
+      localStorage.setItem('studentId', response.id.toString());
     }
 
     this.router.navigate(['/student-dashboard']);
