@@ -6,6 +6,7 @@ import { AuthService } from '../../../services/AuthService';
 import { Router } from '@angular/router';
 import { EducationLevel } from '../../../shared/models/enums/educationLevel';
 import { CreateStudentProfileRequest } from '../../../shared/models/requests/create-student-profile.request';
+import { Role } from '../../../shared/models/enums/role';
 
 @Component({
   selector: 'app-student-profile-completion',
@@ -65,11 +66,17 @@ console.log('PROFILE RESPONSE:', response);  // log check
     localStorage.removeItem('companyId');
 
     // Save new one
-    if (response?.id) {
-      localStorage.setItem('studentId', response.id.toString());
-    }
+   const studentId = response?.id ?? response?.studentId ?? userId;
 
-    this.router.navigate(['/student-dashboard']);
+  if (!studentId) {
+    this.errorMessage = 'Student profile created, but student ID was not returned.';
+    return;
+  }
+
+  localStorage.setItem('studentId', studentId.toString());
+  localStorage.setItem('role', Role.STUDENT);
+
+    this.router.navigate(['/student/dashboard']); // changed
   },
   error: (err) => {
     console.log('PROFILE ERROR:', err); //Log cehck
