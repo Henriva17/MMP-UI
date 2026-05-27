@@ -57,7 +57,12 @@ private userService = inject(UserService);
 
     this.userService.createStudentProfile(userId, this.form).subscribe({
   next: (response: any) => {
-console.log('PROFILE RESPONSE:', response);  // log check
+
+     localStorage.setItem('token', response.token);
+  localStorage.setItem('role', response.role);
+  localStorage.setItem('userId', response.userId.toString());
+  localStorage.setItem('studentId', response.studentId.toString());
+  console.log('PROFILE RESPONSE:', response);  // log check
 
     this.isLoading = false;
 
