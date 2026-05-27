@@ -36,14 +36,23 @@ export class CompanyProfileCompletion {
 
     this.userService.createCompanyProfile(userId, this.form).subscribe({
   next: (response: any) => {
-    this.isLoading = false;
 
-    if (response?.id) {
-      localStorage.setItem('companyId', response.id.toString());
-    }
+  console.log('COMPANY PROFILE RESPONSE:', response);
 
-    this.router.navigate(['/company/company-dashboard']);
-  },
+  this.isLoading = false;
+
+  localStorage.setItem('token', response.token);
+  localStorage.setItem('role', response.role);
+  localStorage.setItem('userId', response.userId.toString());
+
+  localStorage.removeItem('studentId');
+
+  if (response.companyId) {
+    localStorage.setItem('companyId', response.companyId.toString());
+  }
+
+  this.router.navigate(['/company/company-dashboard']);
+},
   error: () => {
     this.isLoading = false;
     this.errorMessage = 'Failed to complete profile. Please try again.';
