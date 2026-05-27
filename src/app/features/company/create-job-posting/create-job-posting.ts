@@ -74,6 +74,13 @@ export class CreateJobPosting  {
       applicationDeadline: this.form.value.applicationDeadline!
     };
 
+
+    if (this.companyId == null) {
+  this.errorMessage = 'Company ID missing. Please login again.';
+  this.isSubmitting = false;
+  return;
+}
+
     this.jobPostingService.createPosting(this.companyId, request).subscribe({
       next: () => {
         this.submitted = true;

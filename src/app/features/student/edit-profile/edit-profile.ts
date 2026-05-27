@@ -37,6 +37,15 @@ export class EditProfile implements OnInit {
   newSkill = '';
 
   ngOnInit(): void {
+
+     if (this.studentId == null) {
+    this.errorMessage = 'Student ID missing.';
+    this.isLoading = false;
+    return;
+  }
+
+
+
     this.studentService.getStudentById(this.studentId).subscribe({
       next: (data) => {
         this.student = data;
@@ -52,6 +61,12 @@ export class EditProfile implements OnInit {
     if (this.bioForm.invalid || this.isSaving) return;
     this.isSaving = true;
     const bio = this.bioForm.value.bio ?? '';
+
+     if (this.studentId == null) {
+    this.errorMessage = 'Student ID missing.';
+    this.isLoading = false;
+    return;
+  }
 
     this.studentService.updateBio(this.studentId, bio).subscribe({
       next: () => {
@@ -80,6 +95,12 @@ export class EditProfile implements OnInit {
   saveSkills(): void {
     if (this.isSaving) return;
     this.isSaving = true;
+
+     if (this.studentId == null) {
+    this.errorMessage = 'Student ID missing.';
+    this.isLoading = false;
+    return;
+  }
 
     this.studentService.updateSkills(this.studentId, this.skills).subscribe({
       next: () => {

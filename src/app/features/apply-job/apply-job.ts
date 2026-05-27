@@ -76,6 +76,14 @@ export class ApplyJob {
       motivationLetter: this.letterControl.value!
     };
 
+
+    if (this.studentId == null) {
+  this.errorMessage = 'Student ID missing. Please login again.';
+  this.isSubmitting = false;
+  return;
+}
+  
+
     this.jobApplicationService.apply(this.studentId, request).subscribe({
       next: () => {
         this.submitted = true;
